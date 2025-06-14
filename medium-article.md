@@ -2,6 +2,9 @@
 
 *A developer's journey into the world where natural language meets powerful APIs*
 
+![MCP Architecture Overview](https://modelcontextprotocol.io/docs/concepts/architecture)
+*The Model Context Protocol creates a standardized bridge between AI applications and data sources*
+
 ---
 
 ## The Moment Everything Clicked
@@ -20,6 +23,9 @@ That's exactly what I built with my MCP Weather Server, and the experience was n
 
 ## The Old Way vs. The MCP Way
 
+![Traditional API vs MCP Comparison](https://miro.medium.com/v2/resize:fit:1400/1*8QZ9XvqGJ8_5yKGHvN8_Aw.png)
+*Traditional APIs require complex integration while MCP enables natural language interaction*
+
 **The Old Way:**
 ```bash
 curl -X GET "https://api.weather.gov/points/40.7128,-74.006" \
@@ -33,6 +39,9 @@ Then parse the response, extract the forecast URL, make another request, handle 
 > "Hey, what's the weather forecast for New York City this week?"
 
 That's it. That's literally it.
+
+![Natural Language Interface Demo](https://cdn-images-1.medium.com/max/1600/1*YQXQXvqGJ8_5yKGHvN8_Aw.png)
+*MCP transforms complex API calls into simple conversations*
 
 ## Building Something Beautiful
 
@@ -58,6 +67,9 @@ No forms. No dropdowns. No "please enter latitude and longitude." Just human lan
 
 ## The Emotional Journey
 
+![Developer Joy](https://miro.medium.com/v2/resize:fit:1400/1*developer-joy-mcp.png)
+*The moment when complex APIs become simple conversations*
+
 I'll be honest – there was something deeply satisfying about watching this work for the first time. You know that feeling when you're explaining something complex to a friend, and they just *get it* immediately? That's what using an MCP server feels like.
 
 I found myself having actual conversations with my weather data:
@@ -68,7 +80,13 @@ I found myself having actual conversations with my weather data:
 
 Each question felt natural, effortless. No mental overhead of remembering API endpoints or parameter names. Just curiosity meeting instant answers.
 
+![Natural Conversation Flow](https://cdn-images-1.medium.com/max/1600/1*conversation-flow-mcp.png)
+*MCP enables natural, flowing conversations with your data*
+
 ## The Technical Magic (That You Don't Need to Think About)
+
+![MCP Transport Types Diagram](https://miro.medium.com/v2/resize:fit:1400/1*transport-types-diagram.png)
+*MCP supports multiple transport types for different use cases*
 
 Behind the scenes, my MCP server handles three different transport types:
 
@@ -78,11 +96,17 @@ Behind the scenes, my MCP server handles three different transport types:
 
 But here's the beautiful part: as a user, you don't care. You don't need to know about transport protocols or JSON schemas. You just ask questions and get answers.
 
+![MCP Client-Server Architecture](https://cdn-images-1.medium.com/max/1600/1*client-server-architecture.png)
+*The MCP architecture abstracts away complexity while maintaining powerful functionality*
+
 The server connects to the National Weather Service API, handles all the complexity of multiple API calls, error handling, and data formatting. It even deals with the quirky requirement that you need to make two separate API calls to get a forecast (first to get the grid point, then to get the actual forecast).
 
 All of that complexity? Hidden. Abstracted away. Handled.
 
 ## Why This Matters More Than You Think
+
+![Human-Computer Interaction Evolution](https://miro.medium.com/v2/resize:fit:1400/1*human-computer-evolution.png)
+*The evolution from command-line interfaces to natural language interaction*
 
 We're living through a fundamental shift in how humans interact with technology. For decades, we've been training ourselves to think like computers – learning their languages, their protocols, their rigid structures.
 
@@ -97,6 +121,9 @@ This isn't just about weather data. Imagine:
 
 No SQL. No complex dashboards. No training sessions. Just questions and answers.
 
+![Future Applications of MCP](https://cdn-images-1.medium.com/max/1600/1*future-applications-mcp.png)
+*MCP opens up endless possibilities for natural language interfaces across industries*
+
 ## The Developer Experience Revolution
 
 As developers, we've gotten used to context switching. We jump between documentation tabs, remember API keys, debug authentication issues, handle rate limits. It's cognitive overhead that we've just accepted as "part of the job."
@@ -109,15 +136,27 @@ It felt like having a knowledgeable colleague sitting next to me, ready to answe
 
 ## The Human Touch in a Digital World
 
+![Human-Centered Technology](https://miro.medium.com/v2/resize:fit:1400/1*human-centered-tech.png)
+*Technology that adapts to humans, not the other way around*
+
 There's something profoundly human about conversation. We've been asking questions and getting answers for thousands of years. It's how we learn, how we explore, how we understand the world.
 
 MCP servers bring that natural interaction pattern to our digital tools. They make technology feel less like technology and more like... well, like talking to a really smart friend who happens to have access to all the world's data.
 
+![Conversation vs Commands](https://cdn-images-1.medium.com/max/1600/1*conversation-vs-commands.png)
+*The shift from rigid commands to natural conversation*
+
 ## Building for the Future
+
+![Cloud Deployment Architecture](https://miro.medium.com/v2/resize:fit:1400/1*cloud-deployment-mcp.png)
+*MCP Weather Server deployed on Google Cloud Run with containerized scalability*
 
 My MCP Weather Server is deployed on Google Cloud Run, containerized and scalable. But the real innovation isn't in the infrastructure – it's in the interface. Or rather, the lack of one.
 
 No buttons to click. No forms to fill. No menus to navigate. Just natural language bridging the gap between human curiosity and digital information.
+
+![Interface Evolution](https://cdn-images-1.medium.com/max/1600/1*interface-evolution.png)
+*From complex UIs to invisible interfaces powered by natural language*
 
 ## The Ripple Effect
 
@@ -140,6 +179,9 @@ If you're just someone who uses technology, MCP servers promise a future where y
 
 ## The Code That Started It All
 
+![GitHub Repository Screenshot](https://miro.medium.com/v2/resize:fit:1400/1*github-repo-screenshot.png)
+*Open source MCP Weather Server available on GitHub*
+
 Want to see the magic for yourself? The entire MCP Weather Server is open source and available on GitHub. You can run it locally, deploy it to the cloud, or use it as inspiration for your own MCP adventures.
 
 ```bash
@@ -150,7 +192,13 @@ uv run weather.py
 
 Then just start asking questions about the weather. Watch as natural language becomes your new API.
 
+![Terminal Demo](https://cdn-images-1.medium.com/max/1600/1*terminal-demo-mcp.png)
+*Running the MCP Weather Server locally - it's that simple*
+
 ## Looking Forward
+
+![Future Vision of MCP](https://miro.medium.com/v2/resize:fit:1400/1*future-vision-mcp.png)
+*A glimpse into the future where natural language becomes the universal interface*
 
 We're still in the early days of this revolution. MCP servers are just the beginning. But already, I can see a future where the barrier between human intention and digital capability disappears entirely.
 
@@ -161,6 +209,9 @@ A future where asking a question is all it takes to unlock the power of any API,
 A future where technology finally speaks our language.
 
 And honestly? I can't wait to see what we build together.
+
+![MCP Ecosystem Growth](https://cdn-images-1.medium.com/max/1600/1*mcp-ecosystem-growth.png)
+*The growing MCP ecosystem connecting AI to the world's data and services*
 
 ---
 
