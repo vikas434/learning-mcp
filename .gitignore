@@ -1,0 +1,43 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+venv/
+env/
+
+# Environment files (contains sensitive data)
+.env
+.env.local
+.env.production
+.env.staging
+*.env
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Database
+*.db
+*.sqlite
+
+# API keys and secrets
+config.json
+secrets.json
+credentials.json
+
+# OS generated files
+Thumbs.db
+.DS_Store
