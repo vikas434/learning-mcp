@@ -1,122 +1,117 @@
-# MCP Weather Server
+# Weather MCP Server
 
-A **Model Context Protocol (MCP)** server that provides real-time weather data from the US National Weather Service API.
+A comprehensive **Model Context Protocol (MCP)** server providing real-time weather data via the US National Weather Service API. This project demonstrates three different MCP transport implementations.
 
-## What is MCP?
+## 🌟 Features
 
-**Model Context Protocol** is a standard that allows AI assistants to securely connect to external data sources and tools. Think of it as a bridge between your AI and the real world.
-
-### MCP Transport Types
-
-| Transport | Use Case | Example |
-|-----------|----------|---------|
-| **stdio** | Local development, CLI tools | `uv run weather.py` |
-| **SSE** | Web-based, real-time streaming | `http://localhost:8080/sse` |
-| **HTTP** | REST APIs, web services | `POST /forecast` |
+- **Real-time Weather Data**: Current conditions, forecasts, and alerts
+- **Multiple Transports**: stdio, HTTP, and SSE implementations
+- **US National Weather Service**: Official government weather data
+- **Easy Integration**: Works with Cursor, Claude Desktop, and custom MCP clients
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Python 3.10+
-- `uv` package manager
+- Python 3.13+
+- [uv](https://docs.astral.sh/uv/) package manager
 
 ### Installation
+
 ```bash
-git clone <repo>
-cd weather
+# Clone and setup
+git clone <your-repo-url>
+cd learning-mcp/weather
+
+# Initialize virtual environment and install dependencies
+uv venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 uv sync
 ```
 
-### Run MCP Server (stdio)
+## 🔧 Available Servers
+
+### 1. MCP Server (stdio) - Recommended
+**Best for**: MCP clients like Cursor, Claude Desktop
+
 ```bash
-uv run weather.py
+# Run the server
+python weather_mcp.py
 ```
 
-### Test with MCP Client
-```bash
-echo '{"jsonrpc": "2.0", "id": 1, "method": "tools/list"}' | uv run weather.py
-```
-
-**Response:**
+**Configuration Example** (`~/.cursor/mcp.json`):
 ```json
 {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "result": {
-    "tools": [
-      {
-        "name": "get_forecast",
-        "description": "Get weather forecast for a location",
-        "inputSchema": {
-          "type": "object",
-          "properties": {
-            "latitude": {"type": "number"},
-            "longitude": {"type": "number"}
-          }
-        }
-      },
-      {
-        "name": "get_alerts",
-        "description": "Get weather alerts for a US state",
-        "inputSchema": {
-          "type": "object",
-          "properties": {
-            "state": {"type": "string"}
-          }
-        }
-      }
-    ]
+  "mcpServers": {
+    "weather_local": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/path/to/your/learning-mcp/weather",
+        "run",
+        "weather_mcp.py"
+      ]
+    }
   }
 }
 ```
 
-## 🌐 HTTP API (Deployed)
+### 2. HTTP Server
+**Best for**: REST API integration, testing
 
-**Live API:** https://mcp-weather-server-720482586237.us-central1.run.app
-
-### Get Weather Forecast
 ```bash
-curl -X POST https://mcp-weather-server-720482586237.us-central1.run.app/forecast \
+# Run the HTTP server
+python weather_http.py
+```
+
+**Endpoints:**
+- `GET /` - Health check
+- `POST /forecast` - Get weather forecast
+- `POST /alerts` - Get weather alerts
+
+**Example Usage:**
+```bash
+# Get forecast for NYC
+curl -X POST http://localhost:8080/forecast \
   -H "Content-Type: application/json" \
   -d '{"latitude": 40.7128, "longitude": -74.006}'
-```
 
-**Response:**
-```json
-{
-  "forecasts": [
-    {
-      "name": "Today",
-      "temperature": "64°F",
-      "wind": "12 mph NE",
-      "forecast": "Rain showers likely..."
-    }
-  ],
-  "formatted": "Today:\nTemperature: 64°F\nWind: 12 mph NE..."
-}
-```
-
-### Get Weather Alerts
-```bash
-curl -X POST https://mcp-weather-server-720482586237.us-central1.run.app/alerts \
+# Get alerts for California
+curl -X POST http://localhost:8080/alerts \
   -H "Content-Type: application/json" \
   -d '{"state": "CA"}'
 ```
 
-## 🔧 MCP Client Configuration
+### 3. SSE Server (Server-Sent Events)
+**Best for**: Real-time streaming applications
+
+```bash
+# Run the SSE server
+python weather_sse.py
+```
+
+**Endpoint:** `http://localhost:8000/sse`
+
+## 🛠️ Tools Available
+
+| Tool | Parameters | Description |
+|------|------------|-------------|
+| `get_forecast` | `latitude`, `longitude` | Get 5-day weather forecast for coordinates |
+| `get_alerts` | `state` (2-letter code) | Get active weather alerts for US state |
+
+## 📱 Client Configuration
 
 ### Cursor IDE
 Add to `~/.cursor/mcp.json`:
 ```json
 {
   "mcpServers": {
-    "weather": {
+    "weather_local": {
       "command": "uv",
       "args": [
         "--directory",
-        "/path/to/weather",
+        "/absolute/path/to/learning-mcp/weather",
         "run",
-        "weather.py"
+        "weather_mcp.py"
       ]
     }
   }
@@ -130,58 +125,121 @@ Add to `claude_desktop_config.json`:
   "mcpServers": {
     "weather": {
       "command": "uv",
-      "args": ["--directory", "/path/to/weather", "run", "weather.py"]
+      "args": [
+        "--directory",
+        "/absolute/path/to/learning-mcp/weather",
+        "run",
+        "weather_mcp.py"
+      ]
     }
   }
 }
 ```
 
-## 🛠️ Available Tools
+## 🧪 Testing
 
-| Tool | Parameters | Description |
-|------|------------|-------------|
-| `get_forecast` | `latitude`, `longitude` | 5-day weather forecast |
-| `get_alerts` | `state` (2-letter code) | Active weather alerts |
-
-## 🌍 Deploy to Google Cloud
-
+### Test MCP Server
 ```bash
-# Build and deploy
-docker build -t gcr.io/PROJECT_ID/mcp-weather-server .
-docker push gcr.io/PROJECT_ID/mcp-weather-server
-gcloud run deploy mcp-weather-server --image gcr.io/PROJECT_ID/mcp-weather-server
+# Test tool listing
+echo '{"jsonrpc": "2.0", "id": 1, "method": "tools/list"}' | python weather_mcp.py
+
+# Test forecast tool
+echo '{"jsonrpc": "2.0", "id": 1, "method": "tools/call", "params": {"name": "get_forecast", "arguments": {"latitude": 40.7128, "longitude": -74.006}}}' | python weather_mcp.py
 ```
 
-## 📝 Example Usage
+### Test HTTP Server
+```bash
+# Health check
+curl http://localhost:8080/
 
-**In AI Chat:**
-> "What's the weather in New York City?"
-
-**MCP Tool Call:**
-```json
-{
-  "tool": "get_forecast",
-  "arguments": {
-    "latitude": 40.7128,
-    "longitude": -74.006
-  }
-}
+# Test forecast
+curl -X POST http://localhost:8080/forecast \
+  -H "Content-Type: application/json" \
+  -d '{"latitude": 40.7128, "longitude": -74.006}'
 ```
 
-**Result:**
+## 📋 Usage Examples
+
+### In Cursor/Claude Desktop
+- "What's the weather in New York City?"
+- "Are there any weather alerts for California?"
+- "Give me the 5-day forecast for San Francisco"
+
+### Expected Response Format
 ```
-Today: 64°F, Rain showers likely, 70% chance
-Tonight: 60°F, Rain likely, 60% chance
-Sunday: 65°F, Chance of rain, 40% chance
+Today:
+Temperature: 72°F
+Wind: 8 mph SW
+Forecast: Partly cloudy with a chance of afternoon showers...
 ```
 
 ## 🔍 Troubleshooting
 
-- **"No such file"**: Run from correct directory with `--directory` flag
-- **"Unable to fetch"**: Coordinates must be within US territory
-- **Rate limiting**: NWS API has usage limits
+### Common Issues
+
+1. **Port Already in Use**
+   ```bash
+   # Find process using port
+   lsof -i :8080
+   
+   # Kill process if needed
+   kill -9 <PID>
+   ```
+
+2. **Virtual Environment Issues**
+   ```bash
+   # Recreate virtual environment
+   rm -rf .venv
+   uv venv
+   source .venv/bin/activate
+   uv sync
+   ```
+
+3. **Path Issues in MCP Config**
+   - Use absolute paths in MCP configuration
+   - Ensure the directory path exists
+   - Check file permissions
+
+## 🌐 Deployment
+
+### Google Cloud Run
+```bash
+# Build and deploy
+docker build -t gcr.io/PROJECT_ID/mcp-weather-server .
+gcloud run deploy mcp-weather-server \
+  --image gcr.io/PROJECT_ID/mcp-weather-server \
+  --platform managed \
+  --region us-central1 \
+  --allow-unauthenticated
+```
+
+## 📊 Architecture
+
+```
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│   MCP Client    │    │  Weather Server  │    │ NWS Weather API │
+│  (Cursor/CLI)   │◄──►│   (This Repo)    │◄──►│  (External)     │
+└─────────────────┘    └──────────────────┘    └─────────────────┘
+```
+
+## 🛡️ API Limits
+
+- **National Weather Service API**: No authentication required
+- **Rate Limits**: Reasonable use (no official limits published)
+- **Coverage**: United States only
+
+## 📄 License
+
+MIT License - see LICENSE file for details
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
 
 ---
 
-**Built with:** Python, FastMCP, National Weather Service API  
-**License:** MIT
+**Tech Stack:** Python • FastMCP • Uvicorn • HTTPX • National Weather Service API
