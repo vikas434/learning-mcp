@@ -89,5 +89,4 @@ Forecast: {period['detailedForecast']}
 if __name__ == "__main__":
     import os
     port = int(os.environ.get("PORT", 8080))
-    # Use SSE transport for MCP compatibility
-    mcp.run(transport='sse', port=port, host="0.0.0.0") 
+    mcp.run(port=port, host="0.0.0.0") 
