@@ -1,0 +1,12 @@
+[project]
+name = "bits-course-mcp"
+version = "0.1.0"
+description = "BITS Pilani 2nd Year Course Guide MCP Server"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "mcp[cli]>=1.9.4",
+    "fastapi>=0.104.0",
+    "uvicorn>=0.24.0",
+    "sse-starlette>=2.3.6",
+]
